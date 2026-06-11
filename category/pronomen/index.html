@@ -1,0 +1,132 @@
+<!DOCTYPE html><html lang="ko"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><meta name="description" content="대명사의 종류와 격 변화"><link rel="icon" type="image/svg+xml" href="/de-grammar-site/favicon.svg"><title>4 Pronomen | Deutsch Grammatik</title><link rel="stylesheet" href="/de-grammar-site/_astro/BaseLayout.DJWlwlDK.css"></head> <body> <header class="mobile-header" data-pagefind-ignore> <details> <summary> <a class="brand" href="/de-grammar-site/"> <span class="brand-mark">D</span> <span>Deutsch Grammatik</span> </a> <span aria-hidden="true">목차 ＋</span> </summary> <div class="mobile-nav-body"> <div class="grammar-search is-compact" data-grammar-search data-base="/de-grammar-site/" data-pagefind-url="/de-grammar-site/pagefind/pagefind.js"> <form class="search-form" role="search"> <label> <span class="sr-only">문법 검색</span> <input type="search" name="q" placeholder="문법, 단어, 뜻 검색" autocomplete="off"> </label> <button type="submit">검색</button> </form> <div class="search-results" aria-live="polite" hidden></div> </div> <script>
+  for (const root of document.querySelectorAll("[data-grammar-search]")) {
+    if (root.dataset.searchReady) continue;
+    root.dataset.searchReady = "true";
+
+    const form = root.querySelector("form");
+    const input = root.querySelector("input");
+    const resultsElement = root.querySelector(".search-results");
+    const base = root.dataset.base;
+    const pagefindUrl = root.dataset.pagefindUrl;
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const query = input.value.trim();
+      resultsElement.replaceChildren();
+
+      if (!query) {
+        resultsElement.hidden = true;
+        return;
+      }
+
+      resultsElement.hidden = false;
+      resultsElement.textContent = "검색 중입니다.";
+
+      try {
+        const pagefind = await import(pagefindUrl);
+        await pagefind.init();
+        const search = await pagefind.search(query);
+        const items = await Promise.all(
+          search.results.slice(0, 8).map((result) => result.data()),
+        );
+
+        resultsElement.replaceChildren();
+
+        if (items.length === 0) {
+          resultsElement.textContent = `"${query}" 검색 결과가 없습니다.`;
+          return;
+        }
+
+        for (const item of items) {
+          const link = document.createElement("a");
+          const title = document.createElement("strong");
+          const excerpt = document.createElement("span");
+          const rawUrl = item.url.startsWith("/")
+            ? item.url.slice(1)
+            : item.url;
+
+          link.href = item.url.startsWith(base)
+            ? item.url
+            : `${base}${rawUrl}`;
+          title.textContent = item.meta.title ?? "문법 문서";
+          excerpt.textContent = item.excerpt
+            .replace(/<[^>]+>/g, "")
+            .slice(0, 110);
+          link.append(title, excerpt);
+          resultsElement.append(link);
+        }
+      } catch (error) {
+        resultsElement.textContent =
+          "검색 인덱스를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.";
+        console.error(error);
+      }
+    });
+  }
+</script> <nav class="category-nav" aria-label="문법 대분류"> <div class="category-group"> <a class="category-link" href="/de-grammar-site/category/verb/">  <span class="category-number">1</span> <span>Das Verb</span> <span class="category-count">2</span>  </a>  </div><div class="category-group"> <a class="category-link is-empty" href="/de-grammar-site/category/nominalgruppe/">  <span class="category-number">2</span> <span>Nominalgruppe</span> <span class="category-count">0</span>  </a>  </div><div class="category-group"> <a class="category-link is-empty" href="/de-grammar-site/category/adjektiv/">  <span class="category-number">3</span> <span>Adjektiv</span> <span class="category-count">0</span>  </a>  </div><div class="category-group"> <a class="category-link is-empty" href="/de-grammar-site/category/pronomen/" aria-current="page">  <span class="category-number">4</span> <span>Pronomen</span> <span class="category-count">0</span>  </a> <div class="section-nav">  </div> </div><div class="category-group"> <a class="category-link is-empty" href="/de-grammar-site/category/praepositionen/">  <span class="category-number">5</span> <span>Präpositionen</span> <span class="category-count">0</span>  </a>  </div><div class="category-group"> <a class="category-link is-empty" href="/de-grammar-site/category/praedikat/">  <span class="category-number">6</span> <span>Prädikat</span> <span class="category-count">0</span>  </a>  </div><div class="category-group"> <a class="category-link is-empty" href="/de-grammar-site/category/ergaenzungen/">  <span class="category-number">7</span> <span>Ergänzungen</span> <span class="category-count">0</span>  </a>  </div><div class="category-group"> <a class="category-link is-empty" href="/de-grammar-site/category/ergaenzungssaetze/">  <span class="category-number">8</span> <span>Ergänzungssätze</span> <span class="category-count">0</span>  </a>  </div><div class="category-group"> <a class="category-link is-empty" href="/de-grammar-site/category/angaben/">  <span class="category-number">9</span> <span>Angaben</span> <span class="category-count">0</span>  </a>  </div><div class="category-group"> <a class="category-link is-empty" href="/de-grammar-site/category/satzverbindungen/">  <span class="category-number">10</span> <span>Satzverbindungen</span> <span class="category-count">0</span>  </a>  </div><div class="category-group"> <a class="category-link is-empty" href="/de-grammar-site/category/attribute/">  <span class="category-number">11</span> <span>Attribute</span> <span class="category-count">0</span>  </a>  </div><div class="category-group"> <a class="category-link is-empty" href="/de-grammar-site/category/negation/">  <span class="category-number">12</span> <span>Negation</span> <span class="category-count">0</span>  </a>  </div> </nav> </div> </details> </header> <div class="site-shell"> <aside class="sidebar" data-pagefind-ignore> <div class="sidebar-inner"> <a class="brand" href="/de-grammar-site/"> <span class="brand-mark">D</span> <span>Deutsch Grammatik</span> </a> <div class="grammar-search is-compact" data-grammar-search data-base="/de-grammar-site/" data-pagefind-url="/de-grammar-site/pagefind/pagefind.js"> <form class="search-form" role="search"> <label> <span class="sr-only">문법 검색</span> <input type="search" name="q" placeholder="문법, 단어, 뜻 검색" autocomplete="off"> </label> <button type="submit">검색</button> </form> <div class="search-results" aria-live="polite" hidden></div> </div> <script>
+  for (const root of document.querySelectorAll("[data-grammar-search]")) {
+    if (root.dataset.searchReady) continue;
+    root.dataset.searchReady = "true";
+
+    const form = root.querySelector("form");
+    const input = root.querySelector("input");
+    const resultsElement = root.querySelector(".search-results");
+    const base = root.dataset.base;
+    const pagefindUrl = root.dataset.pagefindUrl;
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const query = input.value.trim();
+      resultsElement.replaceChildren();
+
+      if (!query) {
+        resultsElement.hidden = true;
+        return;
+      }
+
+      resultsElement.hidden = false;
+      resultsElement.textContent = "검색 중입니다.";
+
+      try {
+        const pagefind = await import(pagefindUrl);
+        await pagefind.init();
+        const search = await pagefind.search(query);
+        const items = await Promise.all(
+          search.results.slice(0, 8).map((result) => result.data()),
+        );
+
+        resultsElement.replaceChildren();
+
+        if (items.length === 0) {
+          resultsElement.textContent = `"${query}" 검색 결과가 없습니다.`;
+          return;
+        }
+
+        for (const item of items) {
+          const link = document.createElement("a");
+          const title = document.createElement("strong");
+          const excerpt = document.createElement("span");
+          const rawUrl = item.url.startsWith("/")
+            ? item.url.slice(1)
+            : item.url;
+
+          link.href = item.url.startsWith(base)
+            ? item.url
+            : `${base}${rawUrl}`;
+          title.textContent = item.meta.title ?? "문법 문서";
+          excerpt.textContent = item.excerpt
+            .replace(/<[^>]+>/g, "")
+            .slice(0, 110);
+          link.append(title, excerpt);
+          resultsElement.append(link);
+        }
+      } catch (error) {
+        resultsElement.textContent =
+          "검색 인덱스를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.";
+        console.error(error);
+      }
+    });
+  }
+</script> <nav class="category-nav" aria-label="문법 대분류"> <div class="category-group"> <a class="category-link" href="/de-grammar-site/category/verb/">  <span class="category-number">1</span> <span>Das Verb</span> <span class="category-count">2</span>  </a>  </div><div class="category-group"> <a class="category-link is-empty" href="/de-grammar-site/category/nominalgruppe/">  <span class="category-number">2</span> <span>Nominalgruppe</span> <span class="category-count">0</span>  </a>  </div><div class="category-group"> <a class="category-link is-empty" href="/de-grammar-site/category/adjektiv/">  <span class="category-number">3</span> <span>Adjektiv</span> <span class="category-count">0</span>  </a>  </div><div class="category-group"> <a class="category-link is-empty" href="/de-grammar-site/category/pronomen/" aria-current="page">  <span class="category-number">4</span> <span>Pronomen</span> <span class="category-count">0</span>  </a> <div class="section-nav">  </div> </div><div class="category-group"> <a class="category-link is-empty" href="/de-grammar-site/category/praepositionen/">  <span class="category-number">5</span> <span>Präpositionen</span> <span class="category-count">0</span>  </a>  </div><div class="category-group"> <a class="category-link is-empty" href="/de-grammar-site/category/praedikat/">  <span class="category-number">6</span> <span>Prädikat</span> <span class="category-count">0</span>  </a>  </div><div class="category-group"> <a class="category-link is-empty" href="/de-grammar-site/category/ergaenzungen/">  <span class="category-number">7</span> <span>Ergänzungen</span> <span class="category-count">0</span>  </a>  </div><div class="category-group"> <a class="category-link is-empty" href="/de-grammar-site/category/ergaenzungssaetze/">  <span class="category-number">8</span> <span>Ergänzungssätze</span> <span class="category-count">0</span>  </a>  </div><div class="category-group"> <a class="category-link is-empty" href="/de-grammar-site/category/angaben/">  <span class="category-number">9</span> <span>Angaben</span> <span class="category-count">0</span>  </a>  </div><div class="category-group"> <a class="category-link is-empty" href="/de-grammar-site/category/satzverbindungen/">  <span class="category-number">10</span> <span>Satzverbindungen</span> <span class="category-count">0</span>  </a>  </div><div class="category-group"> <a class="category-link is-empty" href="/de-grammar-site/category/attribute/">  <span class="category-number">11</span> <span>Attribute</span> <span class="category-count">0</span>  </a>  </div><div class="category-group"> <a class="category-link is-empty" href="/de-grammar-site/category/negation/">  <span class="category-number">12</span> <span>Negation</span> <span class="category-count">0</span>  </a>  </div> </nav> </div> </aside> <main class="page"> <div class="content-width">  <article class="index-page"> <nav class="eyebrow breadcrumb-nav" aria-label="문법 목차 이동"> <a class="breadcrumb-link" href="/de-grammar-site/">전체 목차</a> <span aria-hidden="true">›</span> <span>4 Pronomen</span> </nav> <h1>4 Pronomen</h1> <p class="lead">대명사의 종류와 격 변화</p> <p class="empty-note">
+아직 등록된 문법이 없습니다. 새 문법 파일을 추가하면 이 페이지에
+          중분류가 자동으로 표시됩니다.
+</p> </article>  </div> </main> </div> </body></html>
