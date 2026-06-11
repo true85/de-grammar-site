@@ -1,0 +1,199 @@
+<!DOCTYPE html><html lang="ko"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><meta name="description" content="독일어 문법을 주제별로 정리하고 빠르게 찾아보는 온라인 문법책"><link rel="icon" type="image/svg+xml" href="/de-grammar-site/favicon.svg"><title>Deutsch Grammatik</title><link rel="stylesheet" href="/de-grammar-site/_astro/BaseLayout.29uHFZCs.css"></head> <body> <header class="mobile-header" data-pagefind-ignore> <details> <summary> <a class="brand" href="/de-grammar-site/"> <span class="brand-mark">D</span> <span>Deutsch Grammatik</span> </a> <span aria-hidden="true">목차 ＋</span> </summary> <div class="mobile-nav-body"> <div class="grammar-search is-compact" data-grammar-search data-base="/de-grammar-site/" data-pagefind-url="/de-grammar-site/pagefind/pagefind.js"> <form class="search-form" role="search"> <label> <span class="sr-only">문법 검색</span> <input type="search" name="q" placeholder="문법, 단어, 뜻 검색" autocomplete="off"> </label> <button type="submit">검색</button> </form> <div class="search-results" aria-live="polite" hidden></div> </div> <script>
+  for (const root of document.querySelectorAll("[data-grammar-search]")) {
+    if (root.dataset.searchReady) continue;
+    root.dataset.searchReady = "true";
+
+    const form = root.querySelector("form");
+    const input = root.querySelector("input");
+    const resultsElement = root.querySelector(".search-results");
+    const base = root.dataset.base;
+    const pagefindUrl = root.dataset.pagefindUrl;
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const query = input.value.trim();
+      resultsElement.replaceChildren();
+
+      if (!query) {
+        resultsElement.hidden = true;
+        return;
+      }
+
+      resultsElement.hidden = false;
+      resultsElement.textContent = "검색 중입니다.";
+
+      try {
+        const pagefind = await import(pagefindUrl);
+        await pagefind.init();
+        const search = await pagefind.search(query);
+        const items = await Promise.all(
+          search.results.slice(0, 8).map((result) => result.data()),
+        );
+
+        resultsElement.replaceChildren();
+
+        if (items.length === 0) {
+          resultsElement.textContent = `"${query}" 검색 결과가 없습니다.`;
+          return;
+        }
+
+        for (const item of items) {
+          const link = document.createElement("a");
+          const title = document.createElement("strong");
+          const excerpt = document.createElement("span");
+          const rawUrl = item.url.startsWith("/")
+            ? item.url.slice(1)
+            : item.url;
+
+          link.href = item.url.startsWith(base)
+            ? item.url
+            : `${base}${rawUrl}`;
+          title.textContent = item.meta.title ?? "문법 문서";
+          excerpt.textContent = item.excerpt
+            .replace(/<[^>]+>/g, "")
+            .slice(0, 110);
+          link.append(title, excerpt);
+          resultsElement.append(link);
+        }
+      } catch (error) {
+        resultsElement.textContent =
+          "검색 인덱스를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.";
+        console.error(error);
+      }
+    });
+  }
+</script> <nav class="category-nav" aria-label="문법 대분류"> <a class="category-link" href="/de-grammar-site/grammar/verb/present-conjugation/verbs-ending-t-d/">  <span class="category-number"> 01 </span> <span>Verb</span> <span class="category-count">1</span>  </a><span class="category-empty" title="아직 등록된 문법이 없습니다">  <span class="category-number"> 02 </span> <span>Nominalgruppe</span> <span class="category-count">0</span>  </span><span class="category-empty" title="아직 등록된 문법이 없습니다">  <span class="category-number"> 03 </span> <span>Adjektiv</span> <span class="category-count">0</span>  </span><span class="category-empty" title="아직 등록된 문법이 없습니다">  <span class="category-number"> 04 </span> <span>Pronomen</span> <span class="category-count">0</span>  </span><span class="category-empty" title="아직 등록된 문법이 없습니다">  <span class="category-number"> 05 </span> <span>Präpositionen</span> <span class="category-count">0</span>  </span><span class="category-empty" title="아직 등록된 문법이 없습니다">  <span class="category-number"> 06 </span> <span>Prädikat</span> <span class="category-count">0</span>  </span><span class="category-empty" title="아직 등록된 문법이 없습니다">  <span class="category-number"> 07 </span> <span>Ergänzungen</span> <span class="category-count">0</span>  </span><span class="category-empty" title="아직 등록된 문법이 없습니다">  <span class="category-number"> 08 </span> <span>Ergänzungssätze</span> <span class="category-count">0</span>  </span><span class="category-empty" title="아직 등록된 문법이 없습니다">  <span class="category-number"> 09 </span> <span>Angaben</span> <span class="category-count">0</span>  </span><span class="category-empty" title="아직 등록된 문법이 없습니다">  <span class="category-number"> 10 </span> <span>Satzverbindungen</span> <span class="category-count">0</span>  </span><span class="category-empty" title="아직 등록된 문법이 없습니다">  <span class="category-number"> 11 </span> <span>Attribute</span> <span class="category-count">0</span>  </span><span class="category-empty" title="아직 등록된 문법이 없습니다">  <span class="category-number"> 12 </span> <span>Negation</span> <span class="category-count">0</span>  </span> </nav> </div> </details> </header> <div class="site-shell"> <aside class="sidebar" data-pagefind-ignore> <div class="sidebar-inner"> <a class="brand" href="/de-grammar-site/"> <span class="brand-mark">D</span> <span>Deutsch Grammatik</span> </a> <div class="grammar-search is-compact" data-grammar-search data-base="/de-grammar-site/" data-pagefind-url="/de-grammar-site/pagefind/pagefind.js"> <form class="search-form" role="search"> <label> <span class="sr-only">문법 검색</span> <input type="search" name="q" placeholder="문법, 단어, 뜻 검색" autocomplete="off"> </label> <button type="submit">검색</button> </form> <div class="search-results" aria-live="polite" hidden></div> </div> <script>
+  for (const root of document.querySelectorAll("[data-grammar-search]")) {
+    if (root.dataset.searchReady) continue;
+    root.dataset.searchReady = "true";
+
+    const form = root.querySelector("form");
+    const input = root.querySelector("input");
+    const resultsElement = root.querySelector(".search-results");
+    const base = root.dataset.base;
+    const pagefindUrl = root.dataset.pagefindUrl;
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const query = input.value.trim();
+      resultsElement.replaceChildren();
+
+      if (!query) {
+        resultsElement.hidden = true;
+        return;
+      }
+
+      resultsElement.hidden = false;
+      resultsElement.textContent = "검색 중입니다.";
+
+      try {
+        const pagefind = await import(pagefindUrl);
+        await pagefind.init();
+        const search = await pagefind.search(query);
+        const items = await Promise.all(
+          search.results.slice(0, 8).map((result) => result.data()),
+        );
+
+        resultsElement.replaceChildren();
+
+        if (items.length === 0) {
+          resultsElement.textContent = `"${query}" 검색 결과가 없습니다.`;
+          return;
+        }
+
+        for (const item of items) {
+          const link = document.createElement("a");
+          const title = document.createElement("strong");
+          const excerpt = document.createElement("span");
+          const rawUrl = item.url.startsWith("/")
+            ? item.url.slice(1)
+            : item.url;
+
+          link.href = item.url.startsWith(base)
+            ? item.url
+            : `${base}${rawUrl}`;
+          title.textContent = item.meta.title ?? "문법 문서";
+          excerpt.textContent = item.excerpt
+            .replace(/<[^>]+>/g, "")
+            .slice(0, 110);
+          link.append(title, excerpt);
+          resultsElement.append(link);
+        }
+      } catch (error) {
+        resultsElement.textContent =
+          "검색 인덱스를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.";
+        console.error(error);
+      }
+    });
+  }
+</script> <nav class="category-nav" aria-label="문법 대분류"> <a class="category-link" href="/de-grammar-site/grammar/verb/present-conjugation/verbs-ending-t-d/">  <span class="category-number"> 01 </span> <span>Verb</span> <span class="category-count">1</span>  </a><span class="category-empty" title="아직 등록된 문법이 없습니다">  <span class="category-number"> 02 </span> <span>Nominalgruppe</span> <span class="category-count">0</span>  </span><span class="category-empty" title="아직 등록된 문법이 없습니다">  <span class="category-number"> 03 </span> <span>Adjektiv</span> <span class="category-count">0</span>  </span><span class="category-empty" title="아직 등록된 문법이 없습니다">  <span class="category-number"> 04 </span> <span>Pronomen</span> <span class="category-count">0</span>  </span><span class="category-empty" title="아직 등록된 문법이 없습니다">  <span class="category-number"> 05 </span> <span>Präpositionen</span> <span class="category-count">0</span>  </span><span class="category-empty" title="아직 등록된 문법이 없습니다">  <span class="category-number"> 06 </span> <span>Prädikat</span> <span class="category-count">0</span>  </span><span class="category-empty" title="아직 등록된 문법이 없습니다">  <span class="category-number"> 07 </span> <span>Ergänzungen</span> <span class="category-count">0</span>  </span><span class="category-empty" title="아직 등록된 문법이 없습니다">  <span class="category-number"> 08 </span> <span>Ergänzungssätze</span> <span class="category-count">0</span>  </span><span class="category-empty" title="아직 등록된 문법이 없습니다">  <span class="category-number"> 09 </span> <span>Angaben</span> <span class="category-count">0</span>  </span><span class="category-empty" title="아직 등록된 문법이 없습니다">  <span class="category-number"> 10 </span> <span>Satzverbindungen</span> <span class="category-count">0</span>  </span><span class="category-empty" title="아직 등록된 문법이 없습니다">  <span class="category-number"> 11 </span> <span>Attribute</span> <span class="category-count">0</span>  </span><span class="category-empty" title="아직 등록된 문법이 없습니다">  <span class="category-number"> 12 </span> <span>Negation</span> <span class="category-count">0</span>  </span> </nav> </div> </aside> <main class="page"> <div class="content-width">  <header class="home-header"> <p class="eyebrow">나의 독일어 문법책</p> <h1>문법을 체계적으로<br>찾아보고 공부합니다.</h1> <p class="lead">
+문법 주제를 세 단계로 분류하고, 규칙과 예외를 실제 데이터에 맞는
+      형식으로 정리합니다.
+</p> <div class="home-search"> <div class="grammar-search" data-grammar-search data-base="/de-grammar-site/" data-pagefind-url="/de-grammar-site/pagefind/pagefind.js"> <form class="search-form" role="search"> <label> <span class="sr-only">문법 검색</span> <input type="search" name="q" placeholder="문법, 단어, 뜻 검색" autocomplete="off"> </label> <button type="submit">검색</button> </form> <div class="search-results" aria-live="polite" hidden></div> </div> <script>
+  for (const root of document.querySelectorAll("[data-grammar-search]")) {
+    if (root.dataset.searchReady) continue;
+    root.dataset.searchReady = "true";
+
+    const form = root.querySelector("form");
+    const input = root.querySelector("input");
+    const resultsElement = root.querySelector(".search-results");
+    const base = root.dataset.base;
+    const pagefindUrl = root.dataset.pagefindUrl;
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const query = input.value.trim();
+      resultsElement.replaceChildren();
+
+      if (!query) {
+        resultsElement.hidden = true;
+        return;
+      }
+
+      resultsElement.hidden = false;
+      resultsElement.textContent = "검색 중입니다.";
+
+      try {
+        const pagefind = await import(pagefindUrl);
+        await pagefind.init();
+        const search = await pagefind.search(query);
+        const items = await Promise.all(
+          search.results.slice(0, 8).map((result) => result.data()),
+        );
+
+        resultsElement.replaceChildren();
+
+        if (items.length === 0) {
+          resultsElement.textContent = `"${query}" 검색 결과가 없습니다.`;
+          return;
+        }
+
+        for (const item of items) {
+          const link = document.createElement("a");
+          const title = document.createElement("strong");
+          const excerpt = document.createElement("span");
+          const rawUrl = item.url.startsWith("/")
+            ? item.url.slice(1)
+            : item.url;
+
+          link.href = item.url.startsWith(base)
+            ? item.url
+            : `${base}${rawUrl}`;
+          title.textContent = item.meta.title ?? "문법 문서";
+          excerpt.textContent = item.excerpt
+            .replace(/<[^>]+>/g, "")
+            .slice(0, 110);
+          link.append(title, excerpt);
+          resultsElement.append(link);
+        }
+      } catch (error) {
+        resultsElement.textContent =
+          "검색 인덱스를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.";
+        console.error(error);
+      }
+    });
+  }
+</script> </div> </header> <section aria-labelledby="category-heading"> <h2 id="category-heading">문법 대분류</h2> <div class="category-grid"> <a href="/de-grammar-site/grammar/verb/present-conjugation/verbs-ending-t-d/" class="category-card"> <span class="card-number"> 01 </span> <h2>Verb</h2> <p>동사의 변화, 시제, 용법</p> <span class="card-status"> 1개 문법 </span> </a><div class="category-card is-empty"> <span class="card-number"> 02 </span> <h2>Nominalgruppe</h2> <p>명사와 관사로 이루어진 명사구</p> <span class="card-status"> 내용을 추가할 예정입니다 </span> </div><div class="category-card is-empty"> <span class="card-number"> 03 </span> <h2>Adjektiv</h2> <p>형용사의 어미 변화와 비교</p> <span class="card-status"> 내용을 추가할 예정입니다 </span> </div><div class="category-card is-empty"> <span class="card-number"> 04 </span> <h2>Pronomen</h2> <p>대명사의 종류와 격 변화</p> <span class="card-status"> 내용을 추가할 예정입니다 </span> </div><div class="category-card is-empty"> <span class="card-number"> 05 </span> <h2>Präpositionen</h2> <p>전치사의 의미와 요구 격</p> <span class="card-status"> 내용을 추가할 예정입니다 </span> </div><div class="category-card is-empty"> <span class="card-number"> 06 </span> <h2>Prädikat</h2> <p>서술어의 구성과 문장 내 위치</p> <span class="card-status"> 내용을 추가할 예정입니다 </span> </div><div class="category-card is-empty"> <span class="card-number"> 07 </span> <h2>Ergänzungen</h2> <p>동사가 요구하는 필수 문장 성분</p> <span class="card-status"> 내용을 추가할 예정입니다 </span> </div><div class="category-card is-empty"> <span class="card-number"> 08 </span> <h2>Ergänzungssätze</h2> <p>문장 성분 역할을 하는 종속절</p> <span class="card-status"> 내용을 추가할 예정입니다 </span> </div><div class="category-card is-empty"> <span class="card-number"> 09 </span> <h2>Angaben</h2> <p>시간, 원인, 방법 등의 부가 정보</p> <span class="card-status"> 내용을 추가할 예정입니다 </span> </div><div class="category-card is-empty"> <span class="card-number"> 10 </span> <h2>Satzverbindungen</h2> <p>문장과 문장을 연결하는 방법</p> <span class="card-status"> 내용을 추가할 예정입니다 </span> </div><div class="category-card is-empty"> <span class="card-number"> 11 </span> <h2>Attribute</h2> <p>명사를 자세히 꾸미는 요소</p> <span class="card-status"> 내용을 추가할 예정입니다 </span> </div><div class="category-card is-empty"> <span class="card-number"> 12 </span> <h2>Negation</h2> <p>nicht와 kein을 이용한 부정</p> <span class="card-status"> 내용을 추가할 예정입니다 </span> </div> </div> </section> <p class="empty-note">
+문법 내용은 MDX 파일로 관리합니다. 새 주제를 추가하면 알맞은 대분류와
+    중분류에 자동으로 표시됩니다.
+</p>  </div> </main> </div> </body></html>
